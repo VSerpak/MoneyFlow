@@ -1,12 +1,12 @@
 package com.example.vserp.moneyflow.activities;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,18 +64,12 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         Cursor c = getContentResolver().query(Prefs.URI_EXPENSES, null, null, null, null);
 
-        if (c != null) {
-            if (c.moveToFirst()) {
-                do {
-                    Log.d(Prefs.LOG_TAG,
-                            c.getString(c.getColumnIndex(Prefs.FIELD_ID)) +
-                                    ", " + c.getString(c.getColumnIndex(Prefs.EXPENSE_FIELD_ID_PASSIVE)) +
-                                    ", " + c.getString(c.getColumnIndex(Prefs.EXPENSE_FIELD_VOLUME)) +
-                                    ", " + c.getString(c.getColumnIndex(Prefs.EXPENSE_FIELD_DATE)));
-                } while (c.moveToNext());
-            } else
-                Log.d(Prefs.LOG_TAG, "Table " + Prefs.TABLE_NAME_EXPENSES + " has 0 rows");
-            c.close();
+        switch (v.getId()){
+            case R.id.btnDashBoardShowExpenses:
+
+                Intent intent = new Intent(this,ExpensesActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 }

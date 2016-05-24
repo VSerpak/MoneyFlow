@@ -28,7 +28,9 @@
             android:name=".provider.MyContentProvider"
             android:authorities="com.example.vserp.moneyflow.provider"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true" />
+
+        <activity android:name=".activities.ExpensesActivity"></activity>
     </application>
 
 </manifest>

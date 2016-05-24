@@ -20,7 +20,7 @@ public class MyIntentService extends IntentService {
         super("MyIntentService");
     }
 
-    public static void startActionInsertExpense(Context context, String name, Float volume) {
+    public static void startActionInsertExpense(Context context, String name, Double volume) {
         Intent intent = new Intent(context, MyIntentService.class);
         intent.setAction(ACTION_INSERT_EXPENSE);
         intent.putExtra(EXTRA_EXPENSE_NAME, name);
