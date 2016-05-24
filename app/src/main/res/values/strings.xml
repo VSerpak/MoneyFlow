@@ -1,4 +1,12 @@
 <resources>
-    <string name="app_name">MoneyFlow</string>
+    <string name="app_name">\tMoneyFlow</string>
     <string name="action_settings">Settings</string>
+    <string name="button_show_expenses_text">Show all Expenses</string>
+    <string name="item_menu_expense_text">Add new expense</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_volume">Volume</string>
+    <string name="title_add_new_expense_dialog">New Expense Addition</string>
+    <string name="message_add_new_expense_dialog">Add new expense:</string>
+    <string name="positive_button_add_new_expense_dialog">Add</string>
+    <string name="negative_button_add_new_expense_dialog">Dismiss</string>
 </resources>

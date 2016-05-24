@@ -9,11 +9,16 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.vserp.moneyflow.DashboardActivity"
+    tools:context=".activities.DashboardActivity"
     tools:showIn="@layout/activity_dashboard">
 
-    <TextView
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="@string/button_show_expenses_text"
+        android:id="@+id/btnDashBoardShowExpenses"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="153dp" />
 </RelativeLayout>
