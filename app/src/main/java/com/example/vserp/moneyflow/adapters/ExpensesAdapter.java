@@ -53,7 +53,7 @@ public class ExpensesAdapter extends RecyclerView.Adapter{
 
         public TextView tvName;
         public TextView tvVolume;
-        public  TextView tvDate;
+        public TextView tvDate;
 
         public InnerViewHolder(View view) {
             super(view);

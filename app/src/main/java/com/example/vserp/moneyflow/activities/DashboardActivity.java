@@ -1,12 +1,12 @@
 package com.example.vserp.moneyflow.activities;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,25 +50,55 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.item_expense:
                 AddNewExpenseDialog addNewExpenseDialog = new AddNewExpenseDialog();
-                addNewExpenseDialog.show(getFragmentManager(),"addExpense");
-            break;
+                addNewExpenseDialog.show(getFragmentManager(), "addExpense");
+                break;
         }
         return true;
+    }
+
+    // вывод в лог данных из курсора
+    void logCursor(Cursor c) {
+        if (c != null) {
+            if (c.moveToFirst()) {
+                String str;
+                do {
+                    str = "";
+                    for (String cn : c.getColumnNames()) {
+                        str = str.concat(cn + " = " + c.getString(c.getColumnIndex(cn)) + "; ");
+                    }
+                    Log.d(Prefs.LOG_TAG, str);
+                } while (c.moveToNext());
+            }
+        } else
+            Log.d(Prefs.LOG_TAG, "Cursor is null");
     }
 
     @Override
     public void onClick(View v) {
 
-        Cursor c = getContentResolver().query(Prefs.URI_EXPENSES, null, null, null, null);
+        Cursor c;
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnDashBoardShowExpenses:
 
-                Intent intent = new Intent(this,ExpensesActivity.class);
+                Log.d(Prefs.LOG_TAG, "--- EXPENSES_NAMES Table ---");
+                c = getContentResolver().query(Prefs.URI_EXPENSES_NAMES, null, null, null, null);
+                logCursor(c);
+                c.close();
+                Log.d(Prefs.LOG_TAG, "---- ----");
+
+                Log.d(Prefs.LOG_TAG, "--- EXPENSES Table ---");
+                c = getContentResolver().query(Prefs.URI_EXPENSES, null, null, null, null);
+                logCursor(c);
+                c.close();
+                Log.d(Prefs.LOG_TAG, "---- ----");
+/*
+                Intent intent = new Intent(this, ExpensesActivity.class);
                 startActivity(intent);
+*/
                 break;
         }
     }

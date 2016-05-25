@@ -33,7 +33,12 @@ public class Prefs {
     public static final String URI_EXPENSES_TYPE = "expenses";
     public static final Uri URI_EXPENSES = Uri.parse("content://" + URI_EXPENSES_AUTHORITIES + "/" + URI_EXPENSES_TYPE);
 
-    //The Table Names
+    public static final String URI_EXPENSES_NAMES_AUTHORITIES = "com.example.vserp.moneyflow.provider";
+    public static final String URI_EXPENSES_NAMES_TYPE = "expenses_names";
+    public static final Uri URI_EXPENSES_NAMES = Uri.parse("content://" + URI_EXPENSES_NAMES_AUTHORITIES + "/" + URI_EXPENSES_NAMES_TYPE);
+
+    //The Table Expense Names
     public static final String TABLE_NAME_EXPENSE_NAMES = "expense_names";
     public static final String EXPENSE_NAMES_FIELD_NAME = "name";
+    public static final String EXPENSE_NAMES_FIELD_CRITICAL = "critical";
 }

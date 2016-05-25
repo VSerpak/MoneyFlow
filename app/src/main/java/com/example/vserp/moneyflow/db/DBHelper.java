@@ -12,6 +12,12 @@ import com.example.vserp.moneyflow.utils.Prefs;
  */
 public class DBHelper extends SQLiteOpenHelper {
 
+    /*Table expenses
+    - id
+    - id passive - id from table passive
+    -volume - volume of money
+    -date -date when expenses made
+    * */
 
     private static final String CREATE_TABLE_EXPENSES = String.format(
             "create table " + Prefs.TABLE_NAME_EXPENSES
@@ -26,10 +32,15 @@ public class DBHelper extends SQLiteOpenHelper {
 Table expense_names
 - _id
 - name - name of expense
+- critical - is it necessary to make the expense constantly
 */
 
-    private static final String CREATE_TABLE_EXPENSE_NAMES = String.format("create table %s (%s integer primary key autoincrement, %s text);"
-            , Prefs.TABLE_NAME_EXPENSE_NAMES, Prefs.FIELD_ID, Prefs.EXPENSE_NAMES_FIELD_NAME);
+    private static final String CREATE_TABLE_EXPENSE_NAMES = String.format(
+            "create table " + Prefs.TABLE_NAME_EXPENSE_NAMES
+                    + " ( %s integer primary key autoincrement, %s integer, %s text);",
+            Prefs.FIELD_ID,
+            Prefs.EXPENSE_NAMES_FIELD_CRITICAL,Prefs.EXPENSE_NAMES_FIELD_NAME
+            );
 
     public DBHelper(Context context, int version) {
         super(context, Prefs.DB_NAME, null, version);
