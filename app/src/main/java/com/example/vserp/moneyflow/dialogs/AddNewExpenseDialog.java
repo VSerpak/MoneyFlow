@@ -18,6 +18,9 @@ public class AddNewExpenseDialog extends DialogFragment {
     EditText etName;
     EditText etVolume;
     CheckBox chbCritical;
+    int critical = 0;
+    String name;
+    Float volume;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -38,7 +41,17 @@ public class AddNewExpenseDialog extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                addNewExpense();
+
+                                if (chbCritical.isChecked())
+                                    critical = 1;
+
+                                name = etName.getText().toString();
+                                volume = Float.valueOf(etVolume.getText().toString());
+
+                                if (!(name.equals(""))){
+                                    addNewExpense();
+                                }
+                                dismiss();
                             }
                         })
                 .setNegativeButton(R.string.negative_button_add_new_expense_dialog,
@@ -53,12 +66,7 @@ public class AddNewExpenseDialog extends DialogFragment {
 
     private void addNewExpense() {
 
-        int critical = 0;
-        String name = etName.getText().toString();
-        Float volume = Float.valueOf(etVolume.getText().toString());
-        if (chbCritical.isChecked())
-            critical = 1;
-
         MyIntentService.startActionInsertExpense(getActivity(),name, volume, critical);
     }
 }
+

@@ -21,7 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_EXPENSES = String.format(
 
-            "create table if it not exists " + Prefs.TABLE_NAME_EXPENSES
+            "create table if not exists " + Prefs.TABLE_NAME_EXPENSES
                     + " ( %s integer primary key autoincrement, %s integer," +
                     " %s float, %s text);",
             Prefs.FIELD_ID,
@@ -37,7 +37,7 @@ Table expense_names
 */
 
     private static final String CREATE_TABLE_EXPENSE_NAMES = String.format(
-            "create table if it not exists " + Prefs.TABLE_NAME_EXPENSE_NAMES
+            "create table if not exists " + Prefs.TABLE_NAME_EXPENSE_NAMES
                     + " ( %s integer primary key autoincrement, %s integer, %s text);",
             Prefs.FIELD_ID,
             Prefs.EXPENSE_NAMES_FIELD_CRITICAL, Prefs.EXPENSE_NAMES_FIELD_NAME
@@ -50,21 +50,16 @@ Table expense_names
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_EXPENSES);
+        db.execSQL(CREATE_TABLE_EXPENSE_NAMES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(Prefs.LOG_WARN_SQL, "onUpgrade: " + oldVersion + " on the version: " + newVersion);
-        /*if (oldVersion <= 1) {
-            db.execSQL("DROP TABLE IF IT EXISTS" + Prefs.TABLE_NAME_EXPENSES);
-            onCreate(db);
-        }else{
-            if (oldVersion )
-        }*/
+
         switch (oldVersion){
             case 2:
                 db.execSQL(CREATE_TABLE_EXPENSE_NAMES);
-                break;
             default:
                 Log.d(Prefs.LOG_TAG,"You have current version");
                 break;
