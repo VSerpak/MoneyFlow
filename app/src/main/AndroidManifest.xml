@@ -18,7 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".dialogs.AddNewExpenseDialog" />
+        <activity android:name=".activities.ExpensesActivity"
+            android:parentActivityName=".activities.DashboardActivity"
+            >
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.DashboardActivity"/>
+        </activity>
 
         <service
             android:name=".services.MyIntentService"
@@ -30,7 +35,6 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activities.ExpensesActivity"></activity>
     </application>
 
 </manifest>
