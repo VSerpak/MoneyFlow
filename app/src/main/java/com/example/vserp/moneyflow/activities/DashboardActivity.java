@@ -1,5 +1,6 @@
 package com.example.vserp.moneyflow.activities;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -95,10 +96,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 logCursor(c);
                 c.close();
                 Log.d(Prefs.LOG_TAG, "---- ----");
-/*
+
                 Intent intent = new Intent(this, ExpensesActivity.class);
                 startActivity(intent);
-*/
                 break;
         }
     }

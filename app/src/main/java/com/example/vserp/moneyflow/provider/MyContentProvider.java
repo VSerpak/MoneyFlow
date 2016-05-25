@@ -19,6 +19,7 @@ public class MyContentProvider extends ContentProvider {
     private static UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     public static final int URI_EXPENSE_CODE = 1;
     public static final int URI_EXPENSE_NAME_CODE = 2;
+    public static final int URI_RAW_QUERY_ALL_EXPENSES_CODE = 3;
 
     static {
         uriMatcher.addURI(Prefs.URI_EXPENSES_AUTHORITIES,
@@ -27,6 +28,10 @@ public class MyContentProvider extends ContentProvider {
         uriMatcher.addURI(Prefs.URI_EXPENSES_NAMES_AUTHORITIES,
                 Prefs.URI_EXPENSES_NAMES_TYPE,
                 URI_EXPENSE_NAME_CODE);
+        uriMatcher.addURI(Prefs.URI_EXPENSES_NAMES_AUTHORITIES,
+                Prefs.URI_ALL_EXPENSES_TYPE,
+                URI_RAW_QUERY_ALL_EXPENSES_CODE
+                );
     }
 
     public MyContentProvider() {
@@ -77,6 +82,8 @@ public class MyContentProvider extends ContentProvider {
                 cursor = database.query(Prefs.TABLE_NAME_EXPENSE_NAMES,projection,
                         selection,selectionArgs,null,null,sortOrder);
                 break;
+            case URI_RAW_QUERY_ALL_EXPENSES_CODE:
+                cursor = database.rawQuery(Prefs.RAW_QUERY_ALL_EXPENSES,null);
         }
         return cursor;
     }

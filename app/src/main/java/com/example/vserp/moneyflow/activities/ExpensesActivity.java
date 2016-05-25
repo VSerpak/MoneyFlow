@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.vserp.moneyflow.R;
 import com.example.vserp.moneyflow.adapters.ExpensesAdapter;
+import com.example.vserp.moneyflow.utils.Prefs;
 
 public class ExpensesActivity extends AppCompatActivity {
 
@@ -22,6 +23,6 @@ public class ExpensesActivity extends AppCompatActivity {
         rvExpenses = (RecyclerView) findViewById(R.id.rvExpenses);
 
         rvExpenses.setLayoutManager(new LinearLayoutManager(this));
-        rvExpenses.setAdapter(new ExpensesAdapter(this,null));
+        rvExpenses.setAdapter(new ExpensesAdapter(this,getContentResolver().query(Prefs.URI_ALL_EXPENSES,null,null,null,"desc")));
     }
 }

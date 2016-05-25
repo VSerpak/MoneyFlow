@@ -19,7 +19,7 @@ public class Prefs {
 
     //The Database constants:
     public static final String DB_NAME = "Money_Flow_DB";
-    public static final int DB_CURRENT_VERSION = 1;
+    public static final int DB_CURRENT_VERSION = 2;
     public static final String FIELD_ID = "_id";
 
     //The Table Expenses constants:
@@ -37,8 +37,14 @@ public class Prefs {
     public static final String URI_EXPENSES_NAMES_TYPE = "expenses_names";
     public static final Uri URI_EXPENSES_NAMES = Uri.parse("content://" + URI_EXPENSES_NAMES_AUTHORITIES + "/" + URI_EXPENSES_NAMES_TYPE);
 
+    public static final String RAW_QUERY_ALL_EXPENSES = String.format("SELECT expense_names.name, expenses.volume, expense_names.critical, expenses.date FROM expenses INNER JOIN expense_names ON expense_names._id = expenses.id_passive;");
+    public static final String URI_ALL_EXPENSES_TYPE = "all_expenses";
+    public static final Uri URI_ALL_EXPENSES = Uri.parse("content://" + URI_EXPENSES_NAMES_AUTHORITIES + "/" + URI_ALL_EXPENSES_TYPE);
+
     //The Table Expense Names
     public static final String TABLE_NAME_EXPENSE_NAMES = "expense_names";
     public static final String EXPENSE_NAMES_FIELD_NAME = "name";
     public static final String EXPENSE_NAMES_FIELD_CRITICAL = "critical";
+
+    //
 }
