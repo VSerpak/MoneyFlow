@@ -7,6 +7,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import com.example.vserp.moneyflow.db.DBHelper;
 import com.example.vserp.moneyflow.utils.Prefs;
@@ -31,7 +32,7 @@ public class MyContentProvider extends ContentProvider {
         uriMatcher.addURI(Prefs.URI_EXPENSES_NAMES_AUTHORITIES,
                 Prefs.URI_ALL_EXPENSES_TYPE,
                 URI_RAW_QUERY_ALL_EXPENSES_CODE
-                );
+        );
     }
 
     public MyContentProvider() {
@@ -44,7 +45,7 @@ public class MyContentProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
 
         long id;
         Uri insertUri = null;
@@ -67,7 +68,7 @@ public class MyContentProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection,
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         database = dbHelper.getWritableDatabase();
 
@@ -79,30 +80,30 @@ public class MyContentProvider extends ContentProvider {
                         selection, selectionArgs, null, null, sortOrder);
                 break;
             case URI_EXPENSE_NAME_CODE:
-                cursor = database.query(Prefs.TABLE_NAME_EXPENSE_NAMES,projection,
-                        selection,selectionArgs,null,null,sortOrder);
+                cursor = database.query(Prefs.TABLE_NAME_EXPENSE_NAMES, projection,
+                        selection, selectionArgs, null, null, sortOrder);
                 break;
             case URI_RAW_QUERY_ALL_EXPENSES_CODE:
-                cursor = database.rawQuery(Prefs.RAW_QUERY_ALL_EXPENSES,null);
+                cursor = database.rawQuery(Prefs.RAW_QUERY_ALL_EXPENSES, null);
         }
         return cursor;
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection,
+    public int update(@NonNull Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
         // TODO: Implement this to handle requests to update one or more rows.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         // Implement this to handle requests to delete one or more rows.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         // TODO: Implement this to handle requests for the MIME type of the data
         // at the given URI.
         throw new UnsupportedOperationException("Not yet implemented");

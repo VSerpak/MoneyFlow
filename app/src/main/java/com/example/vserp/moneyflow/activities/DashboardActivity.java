@@ -26,12 +26,15 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_dashboard);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        assert toolbar != null;
         toolbar.setLogo(R.drawable.moneyflow_icon_64);
 
         Button buttonShowExpenses = (Button) findViewById(R.id.btnDashBoardShowExpenses);
+        assert buttonShowExpenses != null;
         buttonShowExpenses.setOnClickListener(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,15 +90,19 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
                 Log.d(Prefs.LOG_TAG, "--- EXPENSES_NAMES Table ---");
                 c = getContentResolver().query(Prefs.URI_EXPENSES_NAMES, null, null, null, null);
-                logCursor(c);
-                c.close();
-                Log.d(Prefs.LOG_TAG, "---- ----");
+                if (c != null) {
+                    logCursor(c);
+                    c.close();
+                    Log.d(Prefs.LOG_TAG, "---- ----");
+                }
 
                 Log.d(Prefs.LOG_TAG, "--- EXPENSES Table ---");
                 c = getContentResolver().query(Prefs.URI_EXPENSES, null, null, null, null);
-                logCursor(c);
-                c.close();
-                Log.d(Prefs.LOG_TAG, "---- ----");
+                if (c != null) {
+                    logCursor(c);
+                    c.close();
+                    Log.d(Prefs.LOG_TAG, "---- ----");
+                }
 
                 Intent intent = new Intent(this, ExpensesActivity.class);
                 startActivity(intent);

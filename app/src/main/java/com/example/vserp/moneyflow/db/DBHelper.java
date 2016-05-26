@@ -57,11 +57,11 @@ Table expense_names
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(Prefs.LOG_WARN_SQL, "onUpgrade: " + oldVersion + " on the version: " + newVersion);
 
-        switch (oldVersion){
+        switch (oldVersion) {
             case 2:
                 db.execSQL(CREATE_TABLE_EXPENSE_NAMES);
             default:
-                Log.d(Prefs.LOG_TAG,"You have current version");
+                Log.d(Prefs.LOG_TAG, "You have current version");
                 break;
         }
     }
