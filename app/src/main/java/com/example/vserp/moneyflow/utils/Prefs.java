@@ -35,14 +35,14 @@ public class Prefs {
 
     //The provider constants:
     public static final String URI_EXPENSES_AUTHORITIES = "com.example.vserp.moneyflow.provider";
+
     public static final String URI_EXPENSES_TYPE = "expenses";
     public static final Uri URI_EXPENSES = Uri.parse("content://" + URI_EXPENSES_AUTHORITIES + "/" + URI_EXPENSES_TYPE);
 
-    public static final String URI_EXPENSES_NAMES_AUTHORITIES = "com.example.vserp.moneyflow.provider";
     public static final String URI_EXPENSES_NAMES_TYPE = "expenses_names";
-    public static final Uri URI_EXPENSES_NAMES = Uri.parse("content://" + URI_EXPENSES_NAMES_AUTHORITIES + "/" + URI_EXPENSES_NAMES_TYPE);
+    public static final Uri URI_EXPENSES_NAMES = Uri.parse("content://" + URI_EXPENSES_AUTHORITIES + "/" + URI_EXPENSES_NAMES_TYPE);
 
     public static final String RAW_QUERY_ALL_EXPENSES = "SELECT expense_names.name, expenses.volume, expense_names.critical, expenses.date FROM expenses INNER JOIN expense_names ON expense_names._id = expenses.id_passive;";
     public static final String URI_ALL_EXPENSES_TYPE = "all_expenses";
-    public static final Uri URI_ALL_EXPENSES = Uri.parse("content://" + URI_EXPENSES_NAMES_AUTHORITIES + "/" + URI_ALL_EXPENSES_TYPE);
+    public static final Uri URI_ALL_EXPENSES = Uri.parse("content://" + URI_EXPENSES_AUTHORITIES + "/" + URI_ALL_EXPENSES_TYPE);
 }

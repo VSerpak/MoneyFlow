@@ -26,10 +26,10 @@ public class MyContentProvider extends ContentProvider {
         uriMatcher.addURI(Prefs.URI_EXPENSES_AUTHORITIES,
                 Prefs.URI_EXPENSES_TYPE,
                 URI_EXPENSE_CODE);
-        uriMatcher.addURI(Prefs.URI_EXPENSES_NAMES_AUTHORITIES,
+        uriMatcher.addURI(Prefs.URI_EXPENSES_AUTHORITIES,
                 Prefs.URI_EXPENSES_NAMES_TYPE,
                 URI_EXPENSE_NAME_CODE);
-        uriMatcher.addURI(Prefs.URI_EXPENSES_NAMES_AUTHORITIES,
+        uriMatcher.addURI(Prefs.URI_EXPENSES_AUTHORITIES,
                 Prefs.URI_ALL_EXPENSES_TYPE,
                 URI_RAW_QUERY_ALL_EXPENSES_CODE
         );

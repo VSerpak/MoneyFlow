@@ -77,13 +77,13 @@ public class AddNewExpenseDialog extends DialogFragment implements TextWatcher {
 
         String name;
         Float volume;
-        int critical = 0;
+        boolean isCritical = false;
 
         name = acName.getText().toString();
         volume = Float.valueOf(etVolume.getText().toString());
 
         if (chbCritical.isChecked())
-            critical = 1;
+            isCritical = true;
 
         //Check the correct completion of the requested form and if yes - new expense addition
         if ((name.equals(""))) {
@@ -92,7 +92,7 @@ public class AddNewExpenseDialog extends DialogFragment implements TextWatcher {
             if (volume == 0) {
                 Toast.makeText(getActivity(), "Nothing was added - fill in the form correctly!", Toast.LENGTH_SHORT).show();
             } else {
-                MyIntentService.startActionInsertExpense(getActivity(), name, volume, critical);
+                MyIntentService.startActionInsertExpense(getActivity(), name, volume, isCritical);
                 Toast.makeText(getActivity(), "The expenses were updated successfully", Toast.LENGTH_SHORT).show();
             }
         }

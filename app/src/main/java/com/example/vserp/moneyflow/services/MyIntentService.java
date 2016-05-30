@@ -18,19 +18,19 @@ public class MyIntentService extends IntentService {
     private static final String EXTRA_EXPENSE_VOLUME = "com.example.vserp.moneyflow.services.extra.EXPENSE_VOLUME";
     private static final String EXTRA_EXPENSE_CRITICAL = "com.example.vserp.moneyflow.services.extra.EXPENSE_CRITICAL";
 
-    private int acc = 0;//acounter to account the matches of expense names in the database
+    private boolean needToAddNewExpenseName = true;
     private int position = 0;//cursor position
 
     public MyIntentService() {
         super("MyIntentService");
     }
 
-    public static void startActionInsertExpense(Context context, String name, Float volume, int critical) {
+    public static void startActionInsertExpense(Context context, String name, Float volume, boolean isCritical) {
         Intent intent = new Intent(context, MyIntentService.class);
         intent.setAction(ACTION_INSERT_EXPENSE);
         intent.putExtra(EXTRA_EXPENSE_NAME, name);
         intent.putExtra(EXTRA_EXPENSE_VOLUME, volume);
-        intent.putExtra(EXTRA_EXPENSE_CRITICAL, critical);
+        intent.putExtra(EXTRA_EXPENSE_CRITICAL, isCritical);
         context.startService(intent);
     }
 
@@ -41,36 +41,54 @@ public class MyIntentService extends IntentService {
             if (ACTION_INSERT_EXPENSE.equals(action)) {
                 final String name = intent.getStringExtra(EXTRA_EXPENSE_NAME);
                 final Float volume = intent.getFloatExtra(EXTRA_EXPENSE_VOLUME, 0);
-                final int critical = intent.getIntExtra(EXTRA_EXPENSE_CRITICAL, 0);
-                handleActionInsertExpense(name, volume, critical);
+                final boolean isCritical = intent.getBooleanExtra(EXTRA_EXPENSE_CRITICAL, false);
+                handleActionInsertExpense(name, volume, isCritical);
             }
         }
     }
 
-    private void handleActionInsertExpense(String name, Float volume, int critical) {
+    private void handleActionInsertExpense(String name, Float volume, boolean isCritical) {
 
         ContentValues cv = new ContentValues();
-        ContentValues cv1 = new ContentValues();
 
-        String date = String.valueOf(Calendar.getInstance().getTimeInMillis());
-
-        cv1.put(Prefs.EXPENSE_NAMES_FIELD_NAME, name);
-        cv1.put(Prefs.EXPENSE_NAMES_FIELD_CRITICAL, critical);
+        cv.put(Prefs.EXPENSE_NAMES_FIELD_NAME, name);
+        cv.put(Prefs.EXPENSE_NAMES_FIELD_CRITICAL, isCritical);
 
         Cursor c = getContentResolver().query(Prefs.URI_EXPENSES_NAMES, null, null, null, null);
 
         if (c != null) {
-            checkExpenseNameAvailability(c, cv1, name);
+            checkExpenseNameAvailability(c, cv, name);
 
             passiveIdApplication(c, cv);
-
-            cv.put(Prefs.EXPENSE_FIELD_VOLUME, volume);
-            cv.put(Prefs.EXPENSE_FIELD_DATE, date);
 
             c.close();
         }
 
+        String date = String.valueOf(Calendar.getInstance().getTimeInMillis());
+
+        cv.put(Prefs.EXPENSE_FIELD_VOLUME, volume);
+        cv.put(Prefs.EXPENSE_FIELD_DATE, date);
+
         getContentResolver().insert(Prefs.URI_EXPENSES, cv);
+    }
+
+    //Check if the input expense exist in the table expense_name
+    //If yes - it will not include it into the table
+    private void checkExpenseNameAvailability(Cursor c, ContentValues cv, String name) {
+
+        if (c.moveToFirst()) {
+            do {
+                if ((c.getString(c.getColumnIndex(Prefs.EXPENSE_NAMES_FIELD_NAME))).equals(name)) {
+                    needToAddNewExpenseName = false;
+                    position = c.getPosition();
+                }
+            } while (c.moveToNext());
+            if (needToAddNewExpenseName) {
+                getContentResolver().insert(Prefs.URI_EXPENSES_NAMES, cv);
+            }
+        } else
+            getContentResolver().insert(Prefs.URI_EXPENSES_NAMES, cv);
+        cv.clear();
     }
 
     //Coordinate the _id from the "table_expenses" table with the adding id_passive
@@ -78,37 +96,16 @@ public class MyIntentService extends IntentService {
     private void passiveIdApplication(Cursor c, ContentValues cv) {
 
         try {
-            if (c != null) {
-                if (acc == 0) {
-                    c.moveToLast();
-                    cv.put(Prefs.EXPENSE_FIELD_ID_PASSIVE, Integer.valueOf(c.getString(c.getColumnIndex(Prefs.FIELD_ID))) + 1);
-                } else {
-                    c.moveToPosition(position);
-                    cv.put(Prefs.EXPENSE_FIELD_ID_PASSIVE, Integer.valueOf(c.getString(c.getColumnIndex(Prefs.FIELD_ID))));
-                }
+            if (needToAddNewExpenseName) {
+                c.moveToLast();
+                cv.put(Prefs.EXPENSE_FIELD_ID_PASSIVE, Integer.valueOf(c.getString(c.getColumnIndex(Prefs.FIELD_ID))) + 1);
+            } else {
+                c.moveToPosition(position);
+                cv.put(Prefs.EXPENSE_FIELD_ID_PASSIVE, Integer.valueOf(c.getString(c.getColumnIndex(Prefs.FIELD_ID))));
             }
         } catch (android.database.CursorIndexOutOfBoundsException e) {
             cv.put(Prefs.EXPENSE_FIELD_ID_PASSIVE, 1);
         }
     }
 
-    //Check if the input expense exist in the table expense_name
-    //If yes - it will not include it into the table
-    private void checkExpenseNameAvailability(Cursor c, ContentValues cv1, String name) {
-
-        if (c != null) {
-            if (c.moveToFirst()) {
-                do {
-                    if ((c.getString(c.getColumnIndex(Prefs.EXPENSE_NAMES_FIELD_NAME))).equals(name)) {
-                        acc++;
-                        position = c.getPosition();
-                    }
-                } while (c.moveToNext());
-                if (acc == 0) {
-                    getContentResolver().insert(Prefs.URI_EXPENSES_NAMES, cv1);
-                }
-            } else
-                getContentResolver().insert(Prefs.URI_EXPENSES_NAMES, cv1);
-        }
-    }
 }
