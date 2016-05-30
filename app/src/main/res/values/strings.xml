@@ -10,4 +10,5 @@
     <string name="positive_button_add_new_expense_dialog">Add</string>
     <string name="negative_button_add_new_expense_dialog">Dismiss</string>
     <string name="critical">Critical</string>
+    <string name="expenses_activity_name">List of expenses</string>
 </resources>

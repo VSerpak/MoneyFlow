@@ -23,13 +23,13 @@ public class Prefs {
     public static final String FIELD_ID = "_id";
 
     //The Table Expenses constants:
-    public static final String TABLE_NAME_EXPENSES = "expenses";
+    public static final String TABLE_EXPENSES = "expenses";
     public static final String EXPENSE_FIELD_ID_PASSIVE = "id_passive";
     public static final String EXPENSE_FIELD_VOLUME = "volume";
     public static final String EXPENSE_FIELD_DATE = "date";
 
     //The Table Expense Names
-    public static final String TABLE_NAME_EXPENSE_NAMES = "expense_names";
+    public static final String TABLE_EXPENSE_NAMES = "expense_names";
     public static final String EXPENSE_NAMES_FIELD_NAME = "name";
     public static final String EXPENSE_NAMES_FIELD_CRITICAL = "critical";
 

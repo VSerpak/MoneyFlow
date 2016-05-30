@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
@@ -54,12 +55,12 @@ public class MyContentProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case URI_EXPENSE_CODE:
-                id = database.insert(Prefs.TABLE_NAME_EXPENSES, null, values);
+                id = database.insert(Prefs.TABLE_EXPENSES, null, values);
                 insertUri = ContentUris.withAppendedId(Prefs.URI_EXPENSES, id);
                 getContext().getContentResolver().notifyChange(insertUri, null);
                 break;
             case URI_EXPENSE_NAME_CODE:
-                id = database.insert(Prefs.TABLE_NAME_EXPENSE_NAMES, null, values);
+                id = database.insert(Prefs.TABLE_EXPENSE_NAMES, null, values);
                 insertUri = ContentUris.withAppendedId(Prefs.URI_EXPENSES_NAMES, id);
                 getContext().getContentResolver().notifyChange(insertUri, null);
                 break;
@@ -76,15 +77,20 @@ public class MyContentProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case URI_EXPENSE_CODE:
-                cursor = database.query(Prefs.TABLE_NAME_EXPENSES, projection,
+                cursor = database.query(Prefs.TABLE_EXPENSES, projection,
                         selection, selectionArgs, null, null, sortOrder);
                 break;
             case URI_EXPENSE_NAME_CODE:
-                cursor = database.query(Prefs.TABLE_NAME_EXPENSE_NAMES, projection,
+                cursor = database.query(Prefs.TABLE_EXPENSE_NAMES, projection,
                         selection, selectionArgs, null, null, sortOrder);
                 break;
             case URI_RAW_QUERY_ALL_EXPENSES_CODE:
-                cursor = database.rawQuery(Prefs.RAW_QUERY_ALL_EXPENSES, null);
+                SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+                qb.setTables(Prefs.TABLE_EXPENSES + " INNER JOIN " + Prefs.TABLE_EXPENSE_NAMES + " ON (" +
+                        Prefs.TABLE_EXPENSE_NAMES + "." + Prefs.FIELD_ID + " = "
+                        + Prefs.TABLE_EXPENSES + "." + Prefs.EXPENSE_FIELD_ID_PASSIVE + ")");
+                cursor = qb.query(database, projection, selection, selectionArgs, null, null, sortOrder);
+                //cursor = database.rawQuery(Prefs.RAW_QUERY_ALL_EXPENSES, null);
         }
         return cursor;
     }

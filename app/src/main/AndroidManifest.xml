@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".activities.ExpensesActivity"
             android:parentActivityName=".activities.DashboardActivity"
+            android:label="@string/expenses_activity_name"
             >
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.DashboardActivity"/>

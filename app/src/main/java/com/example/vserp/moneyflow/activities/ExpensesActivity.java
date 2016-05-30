@@ -23,6 +23,6 @@ public class ExpensesActivity extends AppCompatActivity {
         rvExpenses = (RecyclerView) findViewById(R.id.rvExpenses);
 
         rvExpenses.setLayoutManager(new LinearLayoutManager(this));
-        rvExpenses.setAdapter(new ExpensesAdapter(this,getContentResolver().query(Prefs.URI_ALL_EXPENSES,null,null,null,"desc")));
+        rvExpenses.setAdapter(new ExpensesAdapter(this,getContentResolver().query(Prefs.URI_ALL_EXPENSES,null,null,null,null)));
     }
 }
